@@ -1,0 +1,21 @@
+.venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.csv
+*.npz
+
+# HW 3 only
+assignment1
+assignment2
+t.py
+assignment3_v2/data
+assignment3_v2/output
+assignment3_v2/.DS_Store
+
+
+
