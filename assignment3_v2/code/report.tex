@@ -38,7 +38,14 @@ The implementation follows these key steps:
 \end{enumerate}
 
 \subsubsection{Results}
-The computed Fundamental Matrix was used to visualize the epipolar lines for several selected points in the first image, as shown in Figure \ref{fig:epipolar_lines}. The lines correctly pass through or very near the corresponding feature in the second image, validating our implementation.
+The computed Fundamental Matrix was used to visualize the epipolar lines for several selected points in the first image, as shown in Figure \ref{fig:epipolar_lines}. The lines correctly pass through or very near the corresponding feature in the second image, validating our implementation.\newline
+\begin{multline}
+F = \begin{bmatrix}
+-5.82165969e-07 & 1.25307999e-05 & 2.18161360e-03 \\
+2.96930855e-05 & -2.33098304e-07 & -2.51495918e-01 \\
+-6.38348941e-03 & 2.41837250e-01 & 1.00000000e+00
+\end{bmatrix}
+\end{multline}
 
 \begin{figure}[h!]
     \centering
@@ -81,12 +88,13 @@ The Essential Matrix ($E$) relates corresponding points in normalized camera coo
 
 \subsubsection{Results}
 Using the previously computed $F$ and the provided intrinsics, the estimated Essential Matrix for the temple image pair is:
-\begin{verbatim}
-Essential Matrix E:
-[[  -1.34574426   29.07118462    7.75265911]
- [  68.88731584   -0.54273929 -370.14770947]
- [   1.17198847  374.71223603    0.4291653 ]]
-\end{verbatim}
+\begin{multline}
+E = \begin{bmatrix}
+-1.34574426 &   29.07118462 &    7.75265911 \\
+68.88731584 &   -0.54273929 & -370.14770947 \\
+ 1.17198847 &  374.71223603 &    0.4291653 
+\end{bmatrix}
+\end{multline}
 
 \subsection{Triangulation}
 \subsubsection{Theory and Implementation}
@@ -95,7 +103,7 @@ The \texttt{triangulate} function reconstructs the 3D coordinates of a point giv
 \textbf{Determining the Correct Extrinsic Matrix:} The Essential Matrix can be decomposed into four possible extrinsic matrices ($[R|t]$) for the second camera. To find the correct one, we use the \textbf{cheirality condition}. This physical constraint requires that the reconstructed 3D point must be in front of both cameras (i.e., have a positive depth value in both camera coordinate systems). Our implementation triangulates the points using each of the four candidate matrices and counts how many points have a positive depth for both views. The matrix that yields the highest count of valid points is selected as the correct one.
 
 \subsubsection{Re-projection Error}
-After triangulation, the re-projection error was computed by projecting the 3D points back onto the first image using $M_1$ and calculating the mean Euclidean distance between the re-projected points and the original ground-truth points. The implementation successfully achieved a re-projection error of less than 2 pixels, confirming the accuracy of the reconstruction pipeline.
+After triangulation, the re-projection error was computed by projecting the 3D points back onto the first image using $M_1$ and calculating the mean Euclidean distance between the re-projected points and the original ground-truth points. The implementation successfully achieved a re-projection error of 1.3400 pixels, confirming the accuracy of the reconstruction pipeline.
 
 \subsection{Putting It All Together: Final Reconstruction}
 \subsubsection{Results}
